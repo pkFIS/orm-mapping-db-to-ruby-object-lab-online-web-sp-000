@@ -13,10 +13,10 @@ class Student
   def self.all
     # retrieve all the rows from the "Students" database
     # remember each row should be a new instance of the Student class
-    query = <<-SQL
+    sql = <<-SQL
     SELECT * FROM students
      SQL
-    DB[:conn].execute(query).map do |row|
+    DB[:conn].execute(sql).map do |row|
       self.new_from_db(row)
     end
   end
@@ -24,69 +24,69 @@ class Student
   def self.find_by_name(name)
     # find the student in the database given a name
     # return a new instance of the Student class
-    query = <<-SQL
+    sql = <<-SQL
       SELECT *
       FROM students
       WHERE students.name = ?
       LIMIT 1
      SQL
-    DB[:conn].execute(query, name).map do |row|
+    DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
     end.first
   end
 
   def self.all_students_in_grade_9
-      query = <<-SQL
+      sql = <<-SQL
         SELECT *
         FROM students
         WHERE students.grade = 9
        SQL
-      DB[:conn].execute(query).map do |row|
+      DB[:conn].execute(sql).map do |row|
         self.new_from_db(row)
       end
     end
 
     def self.students_below_12th_grade
-      query = <<-SQL
+      sql = <<-SQL
         SELECT *
         FROM students
         WHERE students.grade < 12
        SQL
-      DB[:conn].execute(query).map do |row|
+      DB[:conn].execute(sql).map do |row|
         self.new_from_db(row)
       end
     end
 
     def self.first_X_students_in_grade_10(x)
-      query = <<-SQL
+      sql = <<-SQL
         SELECT *
         FROM students
         WHERE students.grade = 10
         LIMIT ?
        SQL
-      DB[:conn].execute(query, x).map do |row|
+      DB[:conn].execute(sql, x).map do |row|
         self.new_from_db(row)
       end
     end
 
     def self.first_student_in_grade_10
-      query = <<-SQL
+      sql = <<-SQL
         SELECT * FROM students
         WHERE grade = 10
         LIMIT 1
        SQL
-      DB[:conn].execute(query).map do |row|
+      DB[:conn].execute(sql).map do |row|
         self.new_from_db(row)
       end.first
     end
 
     def self.all_students_in_grade_X(x)
-      query = <<-SQL
+      sql = <<-SQL
         SELECT *
         FROM students
         WHERE grade = ?
       SQL
-      DB[:conn].execute(query, x).map do |row|
+      DB[:conn].execute(sql, x).map do |row|
        self.new_from_db(row)
       end
     end
